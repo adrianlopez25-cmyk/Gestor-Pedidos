@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de pedidos de material</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Gestor de pedidos de material</h1>
+  </header>
+
+  <main>
+    <!-- ============ CATÁLOGO ============ -->
+    <section aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Catálogo</h2>
+
+      <div class="filtros">
+        <div class="campo">
+          <label for="buscador">Buscar por nombre</label>
+          <input type="search" id="buscador" maxlength="60" autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="filtro-categoria">Categoría</label>
+          <select id="filtro-categoria">
+            <option value="">Todas</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="mensaje-catalogo" role="status"></p>
+      <!-- Las tarjetas se crean desde JavaScript (crearTarjetaProducto) -->
+      <div id="catalogo" class="rejilla"></div>
+    </section>
+
+    <!-- ============ CARRITO ============ -->
+    <section aria-labelledby="titulo-carrito">
+      <h2 id="titulo-carrito">Carrito</h2>
+      <p id="carrito-vacio" role="status"></p>
+      <!-- Contenedor común: aquí se hace la delegación de eventos del botón "Retirar" -->
+      <ul id="lineas-carrito" class="lista-lineas"></ul>
+      <dl id="resumen-carrito" class="resumen" hidden>
+        <dt>Total de unidades</dt><dd id="total-unidades">0</dd>
+        <dt>Subtotal</dt><dd id="subtotal">0,00 €</dd>
+        <dt>Descuento</dt><dd id="descuento">0,00 €</dd>
+        <dt>Total</dt><dd id="total-pedido">0,00 €</dd>
+      </dl>
+    </section>
+
+    <!-- ============ FORMULARIO ============ -->
+    <section aria-labelledby="titulo-pedido">
+      <h2 id="titulo-pedido">Confirmar pedido</h2>
+
+      <!-- novalidate: desactiva los bocadillos automáticos del navegador al enviar;
+           la validación la coordinamos nosotros desde JavaScript. -->
+      <form id="form-pedido" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre y apellidos</label>
+          <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="60"
+                 autocomplete="name" aria-describedby="error-nombre">
+          <p class="error-campo" id="error-nombre"></p>
+        </div>
+
+        <div class="campo">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required maxlength="254"
+                 autocomplete="email" aria-describedby="error-email">
+          <p class="error-campo" id="error-email"></p>
+        </div>
+
+        <fieldset>
+          <legend>Modalidad de entrega</legend>
+          <label class="opcion">
+            <input type="radio" id="entrega-recogida" name="entrega" value="recogida" checked required>
+            Recogida
+          </label>
+          <label class="opcion">
+            <input type="radio" id="entrega-envio" name="entrega" value="envio" required>
+            Envío
+          </label>
+          <p class="error-campo" id="error-entrega"></p>
+        </fieldset>
+
+        <!-- Solo visible y activo si se elige "envío". Un fieldset disabled excluye
+             sus controles de la validación Y de FormData. -->
+        <fieldset id="datos-envio" disabled hidden>
+          <legend>Datos de envío</legend>
+          <div class="campo">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" required minlength="5" maxlength="100"
+                   autocomplete="street-address" aria-describedby="error-direccion">
+            <p class="error-campo" id="error-direccion"></p>
+          </div>
+          <div class="campo">
+            <label for="cp">Código postal</label>
+            <input type="text" id="cp" name="cp" required inputmode="numeric" maxlength="5"
+                   pattern="(0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}"
+                   autocomplete="postal-code" aria-describedby="error-cp">
+            <p class="error-campo" id="error-cp"></p>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="observaciones">Observaciones (opcional)</label>
+          <textarea id="observaciones" name="observaciones" rows="3" maxlength="200"
+                    aria-describedby="contador-observaciones error-observaciones"></textarea>
+          <p class="contador" id="contador-observaciones" aria-live="polite">0/200</p>
+          <p class="error-campo" id="error-observaciones"></p>
+        </div>
+
+        <div class="campo">
+          <label class="opcion">
+            <input type="checkbox" id="aceptacion" name="aceptacion" required
+                   aria-describedby="error-aceptacion">
+            Confirmo que los datos del pedido son correctos
+          </label>
+          <p class="error-campo" id="error-aceptacion"></p>
+        </div>
+
+        <p id="mensaje-formulario" role="alert"></p>
+        <button type="submit">Confirmar pedido</button>
+      </form>
+    </section>
+
+    <!-- ============ HISTORIAL ============ -->
+    <section aria-labelledby="titulo-historial">
+      <h2 id="titulo-historial">Historial de pedidos</h2>
+
+      <div class="campo">
+        <label for="filtro-entrega">Filtrar por modalidad</label>
+        <select id="filtro-entrega">
+          <option value="todos">Todos</option>
+          <option value="recogida">Recogida</option>
+          <option value="envio">Envío</option>
+        </select>
+      </div>
+
+      <p id="resumen-historial" role="status"></p>
+      <p id="mensaje-historial"></p>
+      <div id="lista-historial"></div>
+
+      <button type="button" id="btn-exportar">Exportar historial</button>
+      <div id="zona-exportacion" hidden>
+        <label for="salida-json">JSON del historial (puedes copiarlo)</label>
+        <textarea id="salida-json" rows="12" readonly></textarea>
+      </div>
+    </section>
+  </main>
+
+  <!-- Orden de carga IMPORTANTE: cada fichero usa lo definido en los anteriores.
+       `defer` = se descargan en paralelo pero se ejecutan EN ORDEN cuando el HTML ya está listo. -->
+  <script src="Producto.js" defer></script>
+  <script src="datos.js" defer></script>
+  <script src="calculos.js" defer></script>
+  <script src="validacion.js" defer></script>
+  <script src="catalogo.js" defer></script>
+  <script src="carrito.js" defer></script>
+  <script src="formulario.js" defer></script>
+  <script src="historial.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>

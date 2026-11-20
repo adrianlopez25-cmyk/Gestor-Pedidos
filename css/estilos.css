@@ -1,0 +1,102 @@
+:root {
+  --color-texto: #1f2933;
+  --color-fondo: #f5f7fa;
+  --color-borde: #cbd2d9;
+  --color-acento: #1d4ed8;
+  --color-error: #b91c1c;
+  --color-ok: #15803d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.5;
+}
+
+header { background: var(--color-acento); color: #fff; padding: 1rem 1.5rem; }
+header h1 { margin: 0; font-size: 1.5rem; }
+
+main { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+
+section {
+  background: #fff;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+h2 { margin-top: 0; font-size: 1.25rem; }
+
+label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+label.opcion { font-weight: normal; display: flex; gap: 0.5rem; align-items: center; }
+
+input[type="text"], input[type="email"], input[type="search"],
+input[type="number"], select, textarea {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 4px;
+  font: inherit;
+}
+
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--color-error); }
+input:invalid.tocado { border-color: var(--color-error); }
+
+button {
+  padding: 0.45rem 0.9rem;
+  border: 0;
+  border-radius: 4px;
+  background: var(--color-acento);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled { background: #9aa5b1; cursor: not-allowed; }
+
+fieldset { border: 1px solid var(--color-borde); border-radius: 6px; margin: 0 0 1rem; }
+fieldset[hidden], [hidden] { display: none; }
+legend { font-weight: 600; padding: 0 0.4rem; }
+
+.campo { margin-bottom: 0.9rem; }
+.filtros { display: flex; gap: 1rem; flex-wrap: wrap; }
+.filtros .campo { flex: 1 1 14rem; }
+
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1rem; }
+.tarjeta { border: 1px solid var(--color-borde); border-radius: 6px; padding: 0.75rem; }
+.tarjeta h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+.tarjeta p { margin: 0.15rem 0; }
+.tarjeta input[type="number"] { margin-bottom: 0.5rem; }
+.agotado { color: var(--color-error); font-weight: 600; }
+
+.lista-lineas { list-style: none; padding: 0; margin: 0 0 0.75rem; }
+.linea {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+.linea-nombre { font-weight: 600; }
+.linea-subtotal { font-weight: 600; text-align: right; }
+
+.resumen { display: grid; grid-template-columns: auto auto; justify-content: end; gap: 0.2rem 1rem; margin: 0; }
+.resumen dt { font-weight: 600; }
+.resumen dd { margin: 0; text-align: right; }
+
+.error-campo, .error { color: var(--color-error); }
+.error-campo { margin: 0.2rem 0 0; min-height: 1.2em; font-size: 0.9rem; }
+.ok { color: var(--color-ok); font-weight: 600; }
+.mensaje-tarjeta { min-height: 1.2em; font-size: 0.9rem; }
+.contador { margin: 0.2rem 0 0; font-size: 0.85rem; color: #52606d; text-align: right; }
+
+.pedido { border: 1px solid var(--color-borde); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.5rem; }
+.pedido summary { cursor: pointer; font-weight: 600; }
+
+#salida-json { font-family: ui-monospace, monospace; font-size: 0.85rem; }
+#btn-exportar { margin-top: 0.75rem; }
