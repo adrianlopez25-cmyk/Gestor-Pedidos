@@ -215,7 +215,8 @@ Después se pulsó "Añadir al carrito" con 1 unidad de Ratón USB. Al repintar 
 
 ## 6. Evidencia en la pestaña Network
 
-<img width="584" height="981" alt="Pestaña Network con la carga de los ficheros por HTTP" src="https://github.com/user-attachments/assets/9663d7aa-be0c-4a78-9693-709cfce5a33c" />
+<img width="1905" height="990" alt="image" src="https://github.com/user-attachments/assets/e8a6aaf7-f3d0-48de-88c8-8fded26ce11d" />
+
 
 **Qué se hizo.** Con DevTools abierto en la pestaña *Network* y la opción *Disable cache* activada, se recargó la página servida con Live Server en `http://127.0.0.1:5500/index.html`.
 
