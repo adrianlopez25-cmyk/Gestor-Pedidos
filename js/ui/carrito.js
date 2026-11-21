@@ -115,8 +115,6 @@ function renderCarrito() {
 }
 
 function iniciarCarrito() {
-  // Delegación de eventos: UN listener en el <ul> común para todos los
-  // botones "Retirar", aunque las líneas se creen y destruyan continuamente.
   document.getElementById("lineas-carrito").addEventListener("click", (event) => {
     const boton = event.target.closest("button[data-accion='retirar']");
     if (!boton) {
@@ -124,5 +122,10 @@ function iniciarCarrito() {
     }
     retirarDelCarrito(Number(boton.dataset.id));
     renderCarrito();
+
+    // Los avisos "Añadido: ..." de las tarjetas ya no son ciertos: se borran.
+    document
+      .querySelectorAll("#catalogo .mensaje-tarjeta")
+      .forEach((mensaje) => mostrarMensaje(mensaje, ""));
   });
 }
