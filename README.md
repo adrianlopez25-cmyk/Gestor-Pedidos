@@ -1,9 +1,9 @@
 # Gestor de pedidos de material
 
-Práctica de integración de **Desarrollo Web en Entorno Cliente** (sesiones 8-13).
+Práctica de integración de **Desarrollo Web en Entorno Cliente**.
 Aplicación web 100 % en el navegador (HTML + CSS + JavaScript, sin frameworks, sin backend, sin `localStorage`) para consultar un catálogo, gestionar un carrito y confirmar pedidos.
 
-Autor: _<tu nombre>_ · Entrega: domingo 22/11/2026, 15:59.
+Autor: _<Adrián López Atalaya>
 
 ## 1. Cómo ejecutar la aplicación (por HTTP, no `file://`)
 
@@ -169,26 +169,32 @@ Crear dos pedidos (uno con Recogida y otro con Envío, p. ej. 87,50 € y 116,99
 
 ## 5. Evidencia de depuración con punto de interrupción
 
-> **Pendiente de completar con captura propia** (`docs/depuracion.png`).
+![Depuración en calculos.js](docs/capturas/Captura_A_adirAlPedido2.PNG)
 
-Pasos para reproducirla:
+**Qué se hizo.** Con DevTools abierto (pestaña *Sources*), se puso un punto de interrupción en la línea 18 de `js/logica/calculos.js`, dentro de `calcularSubtotal`:
 
-1. Abrir DevTools (F12) → pestaña **Sources** → abrir `calculos.js`.
-2. Poner un punto de interrupción (clic en el número de línea) en la línea `suma += producto.precio * linea.cantidad;` de `calcularSubtotal`.
-3. En la página, añadir Ratón USB al carrito (el carrito se repinta y llama a `calcularResumenPedido`).
-4. La ejecución se detiene: en el panel **Scope** se observan `linea`, `producto` y `suma`. Avanzar con **F10** (paso a paso) y comprobar cómo `suma` va acumulando el importe.
+`suma += producto.precio * linea.cantidad;`
 
-Explicación a escribir aquí: _qué valores se observaron en `producto`, `linea.cantidad` y `suma`, y qué se comprobó._
+Después se pulsó "Añadir al carrito" con 1 unidad de Ratón USB. Al repintar el carrito se llama a `calcularResumenPedido`, que llama a `calcularSubtotal`, y la ejecución se detuvo (*Debugger paused*).
 
-![Depuración](docs/depuracion.png)
+**Qué se observó.**
+- En el panel *Scope → Local*, `carrito` contiene una línea (`{productoId: 101, cantidad: 1}`) y `catalogo` tiene 8 productos.
+- Avanzando paso a paso, la variable `suma` pasó de `0` a `12.5`, es decir, `precio (12,50 €) × cantidad (1)`. En la captura, la ejecución está parada en la línea 21 (`return redondear2(suma)`) con `suma = 12.5`.
+- En *Call Stack* aparece `calcularSubtotal` en `calculos.js:21`, lo que confirma qué función se está ejecutando y que la llamó el cálculo del resumen del carrito.
+
+**Qué se comprobó.** Que el subtotal se acumula correctamente línea a línea y que el valor que se devuelve (12,5) coincide con el importe que se muestra después en el carrito. Si el cálculo fallara, este punto permite ver en qué iteración `suma` toma un valor incorrecto.
 
 ## 6. Evidencia en la pestaña Network
 
-> **Pendiente de completar con captura propia** (`docs/network.png`).
+![Pestaña Network](docs/capturas/Captura_Pesta_aNetwork.PNG)
 
-1. Abrir DevTools → pestaña **Network** → recargar la página (Ctrl+R / F5).
-2. Localizar, por ejemplo, `calculos.js`: comprobar **Status 200**, protocolo `http` y la URL `http://localhost:…/calculos.js`.
+**Qué se hizo.** Con DevTools abierto en la pestaña *Network* y la opción *Disable cache* activada, se recargó la página servida con Live Server en `http://127.0.0.1:5500/index.html`.
 
-Explicación a escribir aquí: _qué ficheros se cargaron, su estado y que se sirven por HTTP desde el servidor local._
+**Qué se observó.**
+- Se realizaron 13 peticiones (48,3 kB transferidos). `DOMContentLoaded` se produjo a los 59 ms.
+- `index.html` (tipo *document*), `css/estilos.css` (tipo *stylesheet*) y los 9 ficheros JavaScript (tipo *script*) respondieron con **estado 200**, por lo que se cargaron correctamente por HTTP y no por `file://`.
+- La columna *Initiator* indica que los scripts se piden desde `index.html:151` a `index.html:159`, en el mismo orden en que se declaran las etiquetas `<script defer>`: `Producto.js`, `datos.js`, `calculos.js`, `validacion.js`, `catalogo.js`, `carrito.js`, `formulario.js`, `historial.js` y `main.js`.
+- La entrada `ws` (estado 101) es la conexión WebSocket que usa Live Server para recargar la página automáticamente. No forma parte de la aplicación.
+- `favicon.ico` devuelve 404: el navegador pide ese icono de la pestaña de forma automática y el proyecto no incluye ninguno. No afecta al funcionamiento.
 
-![Network](docs/network.png)
+**Qué se comprobó.** Que todos los recursos de la aplicación se sirven correctamente desde el servidor local y que el orden de carga es el esperado.

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestor de pedidos de material</title>
-  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
   <header>
@@ -148,16 +148,14 @@
     </section>
   </main>
 
-  <!-- Orden de carga IMPORTANTE: cada fichero usa lo definido en los anteriores.
-       `defer` = se descargan en paralelo pero se ejecutan EN ORDEN cuando el HTML ya está listo. -->
-  <script src="Producto.js" defer></script>
-  <script src="datos.js" defer></script>
-  <script src="calculos.js" defer></script>
-  <script src="validacion.js" defer></script>
-  <script src="catalogo.js" defer></script>
-  <script src="carrito.js" defer></script>
-  <script src="formulario.js" defer></script>
-  <script src="historial.js" defer></script>
-  <script src="main.js" defer></script>
+    <script src="js/modelo/Producto.js" defer></script>
+    <script src="js/datos.js" defer></script>
+    <script src="js/logica/calculos.js" defer></script>
+    <script src="js/logica/validacion.js" defer></script>
+    <script src="js/ui/catalogo.js" defer></script>
+    <script src="js/ui/carrito.js" defer></script>
+    <script src="js/ui/formulario.js" defer></script>
+    <script src="js/ui/historial.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>

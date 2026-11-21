@@ -12,6 +12,8 @@ const REGEX_CP = /^(0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}$/;
 
 // Solo comprueba el FORMATO; no demuestra que la dirección exista.
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Garantizo que los nombres solo sean textos
+const REGEX_NOMBRE = /^\p{L}+(?:[ '\-]\p{L}+)*$/u;
 
 // Convierte cualquier valor a texto sin espacios exteriores (null/undefined -> "").
 function limpiarTexto(valor) {
@@ -28,6 +30,8 @@ function validarDatosPedido(datos) {
     errores.nombre = "Indica tu nombre y apellidos.";
   } else if (nombre.length < 2 || nombre.length > 60) {
     errores.nombre = "El nombre debe tener entre 2 y 60 caracteres.";
+  } else if (!REGEX_NOMBRE.test(nombre)) {
+    errores.nombre = "El nombre solo puede contener letras, espacios, guiones y apóstrofos.";
   }
 
   const email = limpiarTexto(datos.email);
