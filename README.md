@@ -169,7 +169,8 @@ Crear dos pedidos (uno con Recogida y otro con Envío, p. ej. 87,50 € y 116,99
 
 ## 5. Evidencia de depuración con punto de interrupción
 
-![Depuración en calculos.js](docs/capturas/Captura_A_adirAlPedido2.PNG)
+<img width="561" height="752" alt="Captura_AñadirAlPedido2" src="https://github.com/user-attachments/assets/91e52b0f-193d-43f4-ac43-09d7eb88d2fd" />
+
 
 **Qué se hizo.** Con DevTools abierto (pestaña *Sources*), se puso un punto de interrupción en la línea 18 de `js/logica/calculos.js`, dentro de `calcularSubtotal`:
 
@@ -186,7 +187,8 @@ Después se pulsó "Añadir al carrito" con 1 unidad de Ratón USB. Al repintar 
 
 ## 6. Evidencia en la pestaña Network
 
-![Pestaña Network](docs/capturas/Captura_Pesta_aNetwork.PNG)
+<img width="584" height="981" alt="Captura_PestañaNetwork" src="https://github.com/user-attachments/assets/9663d7aa-be0c-4a78-9693-709cfce5a33c" />
+
 
 **Qué se hizo.** Con DevTools abierto en la pestaña *Network* y la opción *Disable cache* activada, se recargó la página servida con Live Server en `http://127.0.0.1:5500/index.html`.
 
