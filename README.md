@@ -12,7 +12,6 @@ La aplicación debe servirse con un servidor HTTP local de archivos estáticos. 
 
 ```bash
 npx serve . -l 3000             # Node: http://localhost:3000
-python3 -m http.server 8000     # Python: http://localhost:8000
 ```
 
 Otra opción es la extensión **Live Server** de VS Code ("Go Live"), que sirve en `http://127.0.0.1:5500/index.html` y es la que se ha usado en las evidencias de este documento.
