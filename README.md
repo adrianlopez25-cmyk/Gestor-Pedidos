@@ -228,3 +228,7 @@ Después se pulsó "Añadir al carrito" con 1 unidad de Ratón USB. Al repintar 
 - `favicon.ico` devuelve 404: el navegador pide ese icono de pestaña de forma automática y el proyecto no incluye ninguno. No afecta al funcionamiento de la aplicación.
 
 **Qué se comprobó.** Que todos los recursos de la aplicación se sirven correctamente desde el servidor local y que el orden de carga es el esperado.
+
+## 7. Chat con la IA
+
+https://gemini.google.com/share/d/1tDze1IpH_QeqzIR1xAk7A-fV1CDm6d8T?usp=sharing
